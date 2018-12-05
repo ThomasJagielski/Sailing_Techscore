@@ -1,6 +1,7 @@
 from pandas import *
 import numpy as np
 import math
+
 engine='python'
 
 # Test Link: https://scores.collegesailing.org/f18/victorian-urn/
@@ -22,14 +23,17 @@ scoringTable_w_sc = pandas.read_excel(scoringfile, 'W SC')
 scoringTable_w_a = pandas.read_excel(scoringfile, "Women's A")
 scoringTable_w_b = pandas.read_excel(scoringfile, "Women's B")
 
-print(scoringTable_coed_b)
+#print(scoringTable_coed_b)
 
 links=linksSheet[0]
 links.columns = ['regatta', 'link', 'type']
 num_regatta = len(links.link)
-#print(links.B)
+#print(links.type[4])
 ##print(links)
 ##print(list (links))
+
+regattaType = []
+
 for i in range(2, num_regatta):
     link = links.link[i]
     #print(link)
@@ -41,7 +45,15 @@ for i in range(2, num_regatta):
     tally = [results.Place, results.School]
     results2 = pandas.concat(tally, axis = 1)
 
-    ##print(results2)
+   
+    #regattaType.append(links.type[i])
+    regattaType.append(links.type[i])
+
+
+    #print(regattaType)
+
+
+   # print(results2)
 
     """results_final = results.set_index('Unnamed: 1')
 
@@ -51,6 +63,7 @@ for i in range(2, num_regatta):
 
     #print(results)
     
+print(regattaType)
 # for i in links.B:
 #     table = pandas.read_html('links.B[i]', header=0, index_col=0)
 #     print(table)
