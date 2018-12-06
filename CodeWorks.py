@@ -30,7 +30,7 @@ for i in range(2, num_regatta+1):
     #print(link)
     resultsTable = pandas.read_html(link, header=0, index_col=0)       
     results = resultsTable[0]
-
+    #print(results)
     
 
     results.columns = [c.replace('Unnamed: 1', 'Place') for c in results.columns]
@@ -42,24 +42,31 @@ for i in range(2, num_regatta+1):
     scoringTable.dropna(inplace=True)
     scoringTable.index=pandas.RangeIndex(len( scoringTable.index))
     scoringTable.columns = ['points'] 
-    results.index = pandas.RangeIndex(len(results.index))
+    results.index=pandas.RangeIndex(len(results.index))
     
-    #print(links.type[i], num_teams)
-    #print(results.index)
-    #print(scoringTable.index)
-    tally = [results.Place, results.School,scoringTable]
-
-    #tally = [results.Place, results.School, scoringTable]
+  
+    tally = [results.Place, results.School,results.Team, scoringTable]
     results2 = pandas.concat(tally, axis = 1)
-    results_final = results2.set_index('Place')
 
-    print(results_final)
-    #else:
-     #   tally = [results.Place, results.School]
+    results2.columns = ['Place', 'School', 'Team', 'Points']
     
     
 
-    #print(links.type[i])
-    #print(num_teams)
-    #print(results2)
-    # #print(scoringTable)
+    x = np.where(results2['Team'].str.contains('2')|results2['Team'].str.contains('3'))
+    
+    j=0
+
+    while j < len(x):
+        y = x[j]
+        results2.at[y, 'Points'] = 0
+        j += 1
+    
+    print(results2)
+    
+
+ 
+   
+       
+       
+
+   
