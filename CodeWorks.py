@@ -23,6 +23,7 @@ scoringTable_w_a = pandas.read_excel(scoringfile, "Women's A")
 scoringTable_w_b = pandas.read_excel(scoringfile, "Women's B")
 
 
+bigList = DataFrame()
 
 for i in range(2, num_regatta+1):
    
@@ -61,12 +62,27 @@ for i in range(2, num_regatta+1):
         results2.at[y, 'Points'] = 0
         j += 1
     
-    print(results2)
+        # print(results2)
     
+    bigList = bigList.append(results2)
 
+
+
+bigList=bigList.sort_values(['School', 'Points'], ascending = [1, 0], )
+
+
+bigListLength = len(bigList)
+
+bigList.index=pandas.RangeIndex(len(bigList.index))
+
+print(bigList)
+
+#print(bigList)
+
+'''for i in range(1,bigListLength):
+    if bigList.School[i]=
+
+
+'''                
+#bigResults = pandas.concat(tally2, axis = 0)
  
-   
-       
-       
-
-   
