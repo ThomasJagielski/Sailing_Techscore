@@ -42,16 +42,18 @@ for i in range(2, num_regatta+1):
     scoringTable.dropna(inplace=True)
     scoringTable.index=pandas.RangeIndex(len( scoringTable.index))
     scoringTable.columns = ['points'] 
-    results.index=pandas.RangeIndex(len(results.index))
+    results.index = pandas.RangeIndex(len(results.index))
     
-    print(links.type[i], num_teams)
+    #print(links.type[i], num_teams)
     #print(results.index)
     #print(scoringTable.index)
     tally = [results.Place, results.School,scoringTable]
 
     #tally = [results.Place, results.School, scoringTable]
     results2 = pandas.concat(tally, axis = 1)
-    print(results2)
+    results_final = results2.set_index('Place')
+
+    print(results_final)
     #else:
      #   tally = [results.Place, results.School]
     
