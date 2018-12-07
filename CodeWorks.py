@@ -4,12 +4,20 @@ import math
 
 engine='python'
 
-teams=pandas.read_html('https://docs.google.com/spreadsheets/d/1oDTZazH5M4ErQVKs3YtdrKEDRSgwDWMY_AM40SSpmjY/edit', header=0, index_col=0)
+teamsSheet=pandas.read_csv('https://docs.google.com/spreadsheets/d/1oDTZazH5M4ErQVKs3YtdrKEDRSgwDWMY_AM40SSpmjY/export?format=csv&gid=0', header=0, index_col=0)
 linksSheet= pandas.read_html('https://docs.google.com/spreadsheets/d/1FG4fDoh5nt_hqBfj6m8Ndt0qsKWJYDmauJHY5tUu1HQ/edit#gid=0', header=0, index_col=0)
 
+teams = teamsSheet
+teams.columns = [ 'School', 'Conference', 'Code','Membership', 'Club_or_Var', 'Team_Email', 'Contact', 'Email']
 links=linksSheet[0]
 links.columns = ['regatta', 'link', 'type']
 num_regatta = len(links.link)
+
+teams.School = teams.index
+teams.index=pandas.RangeIndex(len(teams.index))
+
+tally3 = [teams.School, teams.Conference]
+allTeams = pandas.concat(tally3, axis = 1)
 
 
 scoringfile = pandas.ExcelFile('Rank_Values2.xlsx')
@@ -101,14 +109,26 @@ for i in range(0,bigListLength):
 
 
 #print(finalList)
+z = np.where(allTeams['Conference'].str.contains('NEISA'))[0]
+
+teamsNEISA = []
+j=0
+
+while j < len(z):
+    y = z[j]
+    teamsNEISA.append(teams.School[y])
+    j += 1
+
+print(teamsNEISA)
+
+teamsNEISA = pandas.DataFrame({'School':[teamsNEISA]})
 
 
-teamList=pandas.DataFrame({'School':['Yale University']},index=[0])
 
 for i in finalList.index:
 
-    # if teamList.School.str.contains(finalList.School[i]).any():
-    if not teamList['School'].str.match(finalList.School[i]).any():
+    # if teamsNEISA.School.str.contains(finalList.School[i]).any():
+    if not teamsNEISA['School'].str.match(finalList.School[i]).any():
         print('True')
         finalList.Score[i]=np.nan
 finalList.replace(["NaN", 'NaT'], np.nan, inplace = True)
@@ -116,7 +136,7 @@ finalList=finalList.dropna()
 
 finalList=finalList.sort_values(['Score'], ascending = [0], )
 finalList.index=pandas.RangeIndex(start=1,stop=len(finalList.index)+1)
-print(finalList)
+#print(finalList)
 
 
 
