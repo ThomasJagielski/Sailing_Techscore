@@ -77,7 +77,6 @@ bigList.index=pandas.RangeIndex(len(bigList.index))
 finalList=pandas.DataFrame(columns=['School','Score'])
 j=0
 k=0
-print(bigList)
 for i in range(0,bigListLength):
     if (i==0):
         currentRank=pandas.DataFrame({'School':[bigList.School[0]],'Score':[bigList.Points[0]]},index=[0])
@@ -101,11 +100,23 @@ for i in range(0,bigListLength):
                         currentRank.Score= currentRank.Score+bigList.Points[i]
 
 
+#print(finalList)
+
+
+teamList=pandas.DataFrame({'School':['Yale University']},index=[0])
+
+for i in finalList.index:
+
+    # if teamList.School.str.contains(finalList.School[i]).any():
+    if not teamList['School'].str.match(finalList.School[i]).any():
+        print('True')
+        finalList.Score[i]=np.nan
+finalList.replace(["NaN", 'NaT'], np.nan, inplace = True)
+finalList=finalList.dropna()
+
 finalList=finalList.sort_values(['Score'], ascending = [0], )
 finalList.index=pandas.RangeIndex(start=1,stop=len(finalList.index)+1)
-# print(finalList)
-
-
+print(finalList)
 
 
 
