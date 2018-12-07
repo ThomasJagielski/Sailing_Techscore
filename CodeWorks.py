@@ -119,49 +119,19 @@ while j < len(z):
     teamsNEISA.append(teams.School[y])
     j += 1
 
-print(teamsNEISA)
-
-teamsNEISA = pandas.DataFrame({'School':[teamsNEISA]})
-
+teamsNEISA = pandas.Series(np.array(teamsNEISA))
+#print(teamsNEISA)
 
 
 for i in finalList.index:
 
     # if teamsNEISA.School.str.contains(finalList.School[i]).any():
-    if not teamsNEISA['School'].str.match(finalList.School[i]).any():
-        print('True')
+    if not teamsNEISA.str.match(finalList.School[i]).any():
+        #print('True')
         finalList.Score[i]=np.nan
 finalList.replace(["NaN", 'NaT'], np.nan, inplace = True)
 finalList=finalList.dropna()
 
 finalList=finalList.sort_values(['Score'], ascending = [0], )
 finalList.index=pandas.RangeIndex(start=1,stop=len(finalList.index)+1)
-#print(finalList)
-
-
-
-
-
-
-# for i in range(0,bigListLength):
-#     if (i==0):
-#         finalList[1,1]=bigList.School[0]
-#         j=1
-#     else:
-#         if (bigList.School[i]!=bigList.School[i-1]):
-#             finalList[j,1]=bigList.School[i]
-#             j+=1
-# print(finalList)
-
-
-
-
-
-
-    
-
-
-
-                
-#bigResults = pandas.concat(tally2, axis = 0)
- 
+print(finalList)
