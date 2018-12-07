@@ -70,19 +70,67 @@ for i in range(2, num_regatta+1):
 
 bigList=bigList.sort_values(['School', 'Points'], ascending = [1, 0], )
 
-
 bigListLength = len(bigList)
 
 bigList.index=pandas.RangeIndex(len(bigList.index))
-
+# finalList = {}
+finalList=pandas.DataFrame(columns=['School','Score'])
+j=0
+k=0
 print(bigList)
+for i in range(0,bigListLength):
+    if (i==0):
+        currentRank=pandas.DataFrame({'School':[bigList.School[0]],'Score':[bigList.Points[0]]},index=[0])
+        j=1
+    else:
+        if i==bigListLength-1:
+            finalList= pandas.concat([finalList,currentRank])
+        else:
+            if (bigList.School[i]!=bigList.School[i-1]):
+                finalList= pandas.concat([finalList,currentRank])
+                j+=1
+        
+                currentRank=pandas.DataFrame({'School':[bigList.School[i]],'Score':[bigList.Points[i]]},index=[j])
+            else: 
+                if i<=5:
+                    currentRank.Score=currentRank.Score+bigList.Points[i]
+                else:
+                    if bigList.School[i]==bigList.School[i-5]:
+                        'none'
+                    else:
+                        currentRank.Score= currentRank.Score+bigList.Points[i]
 
-#print(bigList)
 
-'''for i in range(1,bigListLength):
-    if bigList.School[i]=
+finalList=finalList.sort_values(['Score'], ascending = [0], )
+finalList.index=pandas.RangeIndex(start=1,stop=len(finalList.index)+1)
+# print(finalList)
 
 
-'''                
+
+
+
+
+
+
+# for i in range(0,bigListLength):
+#     if (i==0):
+#         finalList[1,1]=bigList.School[0]
+#         j=1
+#     else:
+#         if (bigList.School[i]!=bigList.School[i-1]):
+#             finalList[j,1]=bigList.School[i]
+#             j+=1
+# print(finalList)
+
+
+
+
+
+
+    
+
+
+
+                
 #bigResults = pandas.concat(tally2, axis = 0)
  
